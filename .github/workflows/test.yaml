@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        include: ${{ fromJson(needs.prepare-execution-matrix.outputs.matrix) }}
+        script: ${{ fromJson(needs.prepare-execution-matrix.outputs.matrix) }}
     services:
       localstack:
         image: localstack/localstack
