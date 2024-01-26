@@ -35,8 +35,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
+          cache: 'pip'
           python-version: '3.x'
       - name: Set up Bun
         run: |

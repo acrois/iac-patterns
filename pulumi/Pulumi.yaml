@@ -1,3 +1,5 @@
 name: pulumi-localstack-demo
 runtime: python
 description: A Pulumi project for LocalStack demo
+backend:
+  url: file://./dev-data
