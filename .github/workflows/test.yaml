@@ -16,13 +16,13 @@ jobs:
         id: set-matrix
         run: |
           EXEC_FILES=$(find tests -type f -executable | jq -R -s -c 'split("\n")[:-1]')
-          echo "MATRIX=${EXEC_FILES}" >> $GITHUB_ENV
+          echo "MATRIX=${EXEC_FILES}" >> "$GITHUB_OUTPUT"
 
   execute-scripts:
     needs: prepare-execution-matrix
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{fromJson(needs.prepare-execution-matrix.outputs.matrix)}}
+      matrix: ${{ fromJson(needs.prepare-execution-matrix.outputs.matrix) }}
 
     services:
       localstack:
