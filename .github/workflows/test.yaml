@@ -6,7 +6,7 @@ jobs:
   prepare-execution-matrix:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      matrix: ${{ steps.set-matrix.outputs.MATRIX }}
 
     steps:
       - name: Checkout Repository
@@ -22,7 +22,7 @@ jobs:
     needs: prepare-execution-matrix
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{fromJson(env.MATRIX)}}
+      matrix: ${{fromJson(needs.prepare-execution-matrix.outputs.matrix)}}
 
     services:
       localstack:
