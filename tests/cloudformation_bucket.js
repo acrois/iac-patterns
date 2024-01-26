@@ -8,7 +8,7 @@ console.log(`AWS CLI: ${awsCliVersion}`)
 
 if (!awsCliVersion) throw 'Invalid AWS CLI version.';
 
-await $`pwd`.cwd("/cloudformation")
+await $`pwd`.cwd("../cloudformation")
 
 const bucketName = 'my-cloudformation-bucket'
 await $`aws cloudformation create-stack --stack-name my-stack --template-body file://template.yaml --parameters ParameterKey=BucketName,ParameterValue=${bucketName}`

@@ -13,7 +13,7 @@ console.log(`AWS CLI: ${awsCliVersion}`)
 
 if (!awsCliVersion) throw 'Invalid AWS CLI version.';
 
-await $`pwd`.cwd("/pulumi")
+await $`pwd`.cwd("../pulumi")
 const installRequirements = (await $`pip install -r requirements.txt`.text()).trim()
 
 
