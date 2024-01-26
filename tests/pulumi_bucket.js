@@ -6,18 +6,23 @@ console.log('Running Pulumi resource check...')
 const pulumiVersion = (await $`pulumi version`.text()).trim()
 console.log(`Pulumi: ${pulumiVersion}`)
 
-if (!pulumiVersion) throw 'Invalid Pulumi version.';
+if (!pulumiVersion) throw 'Invalid Pulumi version.'
 
 const awsCliVersion = (await $`aws --version`.text()).trim()
 console.log(`AWS CLI: ${awsCliVersion}`)
 
 if (!awsCliVersion) throw 'Invalid AWS CLI version.';
 
-await $`pwd`.cwd("../pulumi")
-const installRequirements = (await $`pip install -r requirements.txt`.text()).trim()
+$.cwd('./pulumi')
 
+const pipResults = await $`pip install -r requirements.txt`
+if (pipResults.exitCode !== 0) throw pipResults.stderr.toString()
+
+const pulumiResults = await $`pulumi up --yes`
+if (pulumiResults.exitCode !== 0) throw pulumiResults.stderr.toString()
 
 const bucketName = (await $`pulumi stack output bucket_name`.text()).trim()
 console.log(`Checking if S3 bucket ${bucketName} exists...`)
 
-await $`aws s3 ls s3://${bucketName}`
+const bucketResults = await $`aws s3 ls s3://${bucketName}`
+if (bucketResults.exitCode !== 0) throw bucketResults.stderr.toString()

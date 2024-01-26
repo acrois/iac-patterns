@@ -13,9 +13,9 @@ console.log(`AWS CLI: ${awsCliVersion}`)
 
 if (!awsCliVersion) throw 'Invalid AWS CLI version.';
 
-await $`pwd`.cwd("../terraform")
+$.cwd('./terraform')
 
-const bucketName = (await $`terraform output bucket_name`.text()).trim()
+const bucketName = (await $`terraform output -raw bucket_name`.text()).trim()
 console.log(`Checking if S3 bucket ${bucketName} exists...`)
 
 await $`aws s3 ls s3://${bucketName}`
