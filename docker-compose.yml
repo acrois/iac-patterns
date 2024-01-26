@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=cloudformation,s3,ec2
+      - DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+    volumes:
+      - "${PWD}/localstack-data:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
