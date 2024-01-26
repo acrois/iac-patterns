@@ -3,7 +3,7 @@
 import { $ } from "bun"
 console.log('Running Pulumi resource check...')
 
-const pulumiVersion = (await $`pulumi version`.text()).trim()
+const pulumiVersion = (await $`pulumilocal version`.text()).trim()
 console.log(`Pulumi: ${pulumiVersion}`)
 
 if (!pulumiVersion) throw 'Invalid Pulumi version.'
@@ -18,10 +18,10 @@ $.cwd('./pulumi')
 const pipResults = await $`pip install -r requirements.txt`
 if (pipResults.exitCode !== 0) throw pipResults.stderr.toString()
 
-const pulumiResults = await $`pulumi up --yes`
+const pulumiResults = await $`pulumilocal up --yes --non-interactive `
 if (pulumiResults.exitCode !== 0) throw pulumiResults.stderr.toString()
 
-const bucketName = (await $`pulumi stack output bucket_name`.text()).trim()
+const bucketName = (await $`pulumilocal stack output bucket_name`.text()).trim()
 console.log(`Checking if S3 bucket ${bucketName} exists...`)
 
 const bucketResults = await $`aws s3 ls s3://${bucketName}`
