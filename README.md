@@ -1,6 +1,8 @@
 # Consolidated IaC with LocalStack Demo
 
-This repository demonstrates how to use Pulumi, Terraform, and AWS CloudFormation with LocalStack for local AWS infrastructure testing.
+[![Dynamic Test Execution](https://github.com/KinetechSolutions/iac-patterns/actions/workflows/test.yaml/badge.svg)](https://github.com/KinetechSolutions/iac-patterns/actions/workflows/test.yaml)
+
+This repository demonstrates how to use Pulumi, Terraform, and AWS CloudFormation with LocalStack for testing patterns for AWS infrastructure.
 
 ## Prerequisites
 

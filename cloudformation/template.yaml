@@ -1,8 +1,20 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: CloudFormation LocalStack Demo
 
+Parameters:
+  BucketName:
+    Type: String
+    Description: Name of the S3 bucket to create
+
 Resources:
   MyBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: my-cloudformation-bucket
+      BucketName: !Ref BucketName
+
+Outputs:
+  S3BucketName:
+    Description: "Name of the S3 bucket"
+    Value: !Ref MyBucket
+    Export:
+      Name: !Sub "${AWS::StackName}-S3BucketName"

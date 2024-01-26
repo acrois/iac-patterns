@@ -13,6 +13,10 @@ console.log(`AWS CLI: ${awsCliVersion}`)
 
 if (!awsCliVersion) throw 'Invalid AWS CLI version.';
 
+await $`pwd`.cwd("/pulumi")
+const installRequirements = (await $`pip install -r requirements.txt`.text()).trim()
+
+
 const bucketName = (await $`pulumi stack output bucket_name`.text()).trim()
 console.log(`Checking if S3 bucket ${bucketName} exists...`)
 
