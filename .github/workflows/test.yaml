@@ -1,0 +1,43 @@
+name: Dynamic Test Execution
+
+on: [push]
+
+jobs:
+  prepare-execution-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Prepare Execution Matrix
+      id: set-matrix
+      run: |
+        EXEC_FILES=$(find test_scripts -type f -executable | jq -R -s -c 'split("\n")[:-1]')
+        echo "::set-output name=matrix::{\"script\":$EXEC_FILES}"
+
+  execute-scripts:
+    needs: prepare-execution-matrix
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{fromJson(needs.prepare-execution-matrix.outputs.matrix)}}
+
+    services:
+      localstack:
+        image: localstack/localstack
+        ports:
+          - 4566:4566
+        environment:
+          - SERVICES=s3,ec2,cloudformation
+          - DEFAULT_REGION=us-east-1
+          - AWS_ACCESS_KEY_ID=test
+          - AWS_SECRET_ACCESS_KEY=test
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Execute Script
+      run: ./${{ matrix.script }}

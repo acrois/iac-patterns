@@ -45,7 +45,7 @@ aws --endpoint-url=http://localhost:4566 s3 ls
 Run the test script:
 
 ```sh
-./tests/bucket.js
+./tests/pulumi_bucket.js
 ```
 
 ## Cleaning Up
