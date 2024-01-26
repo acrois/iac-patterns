@@ -30,10 +30,10 @@ jobs:
         ports:
           - 4566:4566
         environment:
-          - SERVICES=s3,ec2,cloudformation
-          - DEFAULT_REGION=us-east-1
-          - AWS_ACCESS_KEY_ID=test
-          - AWS_SECRET_ACCESS_KEY=test
+          SERVICES: "s3,ec2,cloudformation"
+          DEFAULT_REGION: "us-east-1"
+          AWS_ACCESS_KEY_ID: "test"
+          AWS_SECRET_ACCESS_KEY: "test"
 
     steps:
     - name: Checkout Repository
