@@ -25,14 +25,9 @@ await $`pulumi login --local`
 const pulumiStackResult = await $`pulumi stack select -c dev`
 if (pulumiStackResult.exitCode !== 0) throw pulumiStackResult.stderr.toString()
 
-const pulumiResults = await $`pulumi up -s dev -v 11 --yes --non-interactive --logtostderr --logflow --tracing=file:../output/pulumi-up.trace`
+const pulumiResults = await $`pulumi up -s dev -v 3 --yes --non-interactive --logtostderr --logflow --tracing=file:../output/pulumi-up.trace`
 
-const resultsOut = pulumiResults.stdout.toString()
-await Bun.write('./output/pulumi-up_stdout.log', resultsOut);
-const resultsErr = pulumiResults.stderr.toString()
-await Bun.write('./output/pulumi-up_stderr.log', resultsErr);
-
-if (pulumiResults.exitCode !== 0) throw resultsErr
+if (pulumiResults.exitCode !== 0) throw pulumiResults.stderr.toString()
 
 const bucketName = (await $`pulumi stack output bucket_name`.text()).trim()
 console.log(`Checking if S3 bucket ${bucketName} exists...`)
