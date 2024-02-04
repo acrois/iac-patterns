@@ -31,6 +31,8 @@ jobs:
           DEFAULT_REGION: "us-east-1"
           AWS_ACCESS_KEY_ID: "test"
           AWS_SECRET_ACCESS_KEY: "test"
+          AWS_REGION: us-east-1
+          AWS_DEFAULT_REGION: us-east-1
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -39,11 +41,22 @@ jobs:
         with:
           cache: 'pip'
           python-version: '3.x'
-      - name: Set up Bun
+      - id: setup-env
+        name: Set up Bun
         run: |
           curl -fsSL https://bun.sh/install | bash
           echo "$HOME/.bun/bin" >> $GITHUB_PATH
+          echo "TEST_NAME=${TEST_SCRIPT//\//-}" >> $GITHUB_OUTPUT
+        env:
+          TEST_SCRIPT: ${{ matrix.script }}
       - name: Install AWS CLI
         run: pip install awscli pulumi-local terraform-local awscli-local
       - name: Execute Script
         run: ./${{ matrix.script }}
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          
+          name: output-${{ steps.setup-env.outputs.TEST_NAME }}
+          path: ./output

@@ -1,3 +1,4 @@
 pulumi
 pulumi_aws
 pulumi-local
+debugpy

@@ -1,12 +1,20 @@
 version: '3.8'
 services:
   localstack:
-    image: localstack/localstack
+    image: localstack/localstack:3.0
     ports:
       - "4566:4566"
+    env_file:
+      - .env
     environment:
-      - SERVICES=cloudformation,s3,ec2
+      DEBUG: 1
+      LS_LOG: trace
+      SERVICES: cloudformation,s3,ec2
+      DOCKER_HOST: unix:///var/run/docker.sock
     volumes:
-      - ./localstack/bootstrap:/opt/bootstrap/
-      - ./localstack/data:/tmp/localstack
+      - localstack:/var/lib/localstack
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./localstack/init:/etc/localstack/init
+volumes:
+  localstack:
+

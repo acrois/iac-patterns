@@ -1,5 +1,6 @@
-encryptionsalt: v1:JTcJ77quffg=:v1:QeePUKMMrvZezJ6+:Rad3OPpP4QAU7GlXY3ksPjprjM4P1g==
+encryptionsalt: v1:7tH3xgVBUmQ=:v1:ApDf7SN8kcVXnxPT:+JR4IH/5CmKW6TPc/dbUqMH7eCr/xw==
 config:
+  cloud:provider: aws
   aws:accessKey: test
   aws:endpoints:
     - accessanalyzer: http://localhost:4566
@@ -275,5 +276,5 @@ config:
   aws:region: us-east-1
   aws:s3UsePathStyle: 'true'
   aws:secretKey: test
-  aws:skipCredentialsValidation: 'true'
+  aws:skipCredentialsValidation: "true"
   aws:skipRequestingAccountId: 'true'
