@@ -20,7 +20,7 @@ console.log(`Pulumi: ${pulumiVersion}`)
 
 if (!pulumiVersion) throw 'Invalid Pulumi version.'
 
-await $`ls -la`
+await $`ls -l`
 await $`pulumi login --local`
 await $`pulumi stack select dev`
 
