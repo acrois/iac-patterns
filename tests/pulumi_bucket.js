@@ -22,9 +22,16 @@ if (!pulumiVersion) throw 'Invalid Pulumi version.'
 
 await $`ls`
 await $`pulumi login --local`
-await $`pulumi stack select dev`
+const pulumiStackResult = await $`pulumi stack select dev`
+if (pulumiStackResult.exitCode !== 0) throw pulumiStackResult.stderr.toString()
 
-const pulumiResults = await $`pulumi up -v 11 -s dev --yes --non-interactive`
+const pulumiResults = await $`pulumi up --tracing=file:../output/pulumi-up.trace -v 11 -s dev --yes --non-interactive --logtostderr --logflow`
+
+const resultsOut = pulumiResults.stdout.toString()
+await Bun.write('../output/pulumi-up_stdout.log', resultsOut);
+const resultsErr = pulumiResults.stderr.toString()
+await Bun.write('../output/pulumi-up_stderr.log', resultsErr);
+
 if (pulumiResults.exitCode !== 0) throw pulumiResults.stderr.toString()
 
 const bucketName = (await $`pulumi stack output bucket_name`.text()).trim()
