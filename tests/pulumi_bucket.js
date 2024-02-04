@@ -28,9 +28,9 @@ if (pulumiStackResult.exitCode !== 0) throw pulumiStackResult.stderr.toString()
 const pulumiResults = await $`pulumi up -s dev -v 11 --yes --non-interactive --logtostderr --logflow --tracing=file:../output/pulumi-up.trace`
 
 const resultsOut = pulumiResults.stdout.toString()
-await Bun.write('../output/pulumi-up_stdout.log', resultsOut);
+await Bun.write('./output/pulumi-up_stdout.log', resultsOut);
 const resultsErr = pulumiResults.stderr.toString()
-await Bun.write('../output/pulumi-up_stderr.log', resultsErr);
+await Bun.write('./output/pulumi-up_stderr.log', resultsErr);
 
 if (pulumiResults.exitCode !== 0) throw resultsErr
 
